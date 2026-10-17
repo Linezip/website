@@ -16,20 +16,37 @@
     });
   }
 
-  // Scroll reveal
+  // Scroll reveal: show anything that is on screen or already scrolled past,
+  // so nothing near the bottom of the page stays hidden.
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var els = document.querySelectorAll(".reveal");
-  if (reduce || !("IntersectionObserver" in window)) {
+  var els = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+  if (reduce) {
     els.forEach(function (el) { el.classList.add("in"); });
     return;
   }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("in");
-        io.unobserve(entry.target);
+  var ticking = false;
+  function check() {
+    ticking = false;
+    var vh = window.innerHeight;
+    els = els.filter(function (el) {
+      if (el.getBoundingClientRect().top < vh) {
+        el.classList.add("in");
+        return false;
       }
+      return true;
     });
-  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-  els.forEach(function (el) { io.observe(el); });
+    if (!els.length) {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    }
+  }
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(check);
+    }
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  check();
 })();
