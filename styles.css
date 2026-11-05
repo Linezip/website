@@ -610,3 +610,48 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
   .hairline { transform: scaleX(1); }
   .fade, .reveal { opacity: 1; transform: none; }
 }
+
+/* ---------- Rename banner (rename-banner.js) ---------- */
+.rename-banner {
+  position: relative;
+  z-index: 60;
+  background: #0F6E62;
+  color: #FFFFFF;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.rename-banner .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding-block: 8px;
+  padding-right: calc(var(--pad) + 32px);
+  text-align: center;
+}
+.rename-banner p { margin: 0; }
+.rename-banner a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.rename-banner a:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 2px; }
+.rename-banner-close {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--pad) - 8px);
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 2px;
+  color: inherit;
+  font: inherit;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.rename-banner-close:hover { background: #0A564C; }
+.rename-banner-close:focus-visible { outline: 2px solid #FFFFFF; outline-offset: -2px; }
